@@ -1,23 +1,24 @@
 cc_library(
-    name = "idx_code_indexer",
+    name = "idx_code_index",
     srcs = [
-        "index_file.cc",
+        "code_index.cc",
+        "code_index_reader.cc",
+        "code_index_writer.cc",
+        "code_index_writer_buffer.cc",
+        "sparse_set.cc",
     ],
     hdrs = [
-        "index_file.h",
+        "code_index.h",
+        "code_index_reader.h",
+        "code_index_writer.h",
+        "code_index_writer_buffer.h",
+        "options.h",
+        "post_entry.h",
+        "sparse_set.h",
     ],
-)
-
-cc_test(
-    name = "idx_code_indexer_test",
-    size = "small",
-    srcs = ["index_file_test.cc"],
-    env = {
-        "HOME": "/Users/binhe",
-    },
+    visibility = ["//visibility:public"],
     deps = [
-        ":idx_code_indexer",
-        "@com_google_googletest//:gtest_main",
+        "@com_github_google_glog//:glog",
     ],
 )
 
@@ -26,9 +27,20 @@ cc_binary(
     srcs = [
         "main.cc",
     ],
+    data = [
+        ":test_main",
+    ],
     deps = [
-        ":idx_code_indexer",
+        ":idx_code_index",
         "@com_github_gflags_gflags//:gflags",
         "@com_github_google_glog//:glog",
     ],
+)
+
+filegroup(
+    name = "test_main",
+    srcs = [
+        "main.cc",
+    ],
+    visibility = ["//visibility:public"],
 )
