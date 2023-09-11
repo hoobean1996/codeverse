@@ -1,6 +1,8 @@
 #pragma once
 
-#include "tools/idx/code_index.h"
+#include <cstdint>
+#include <string>
+
 namespace tools::idx {
 
 class IndexReader {
@@ -9,13 +11,11 @@ public:
   ~IndexReader() = default;
   IndexReader(const IndexReader &) = delete;
   IndexReader &operator=(const IndexReader &) = delete;
-  // IndexReader: Create a IndexReader from a CodeIndexer.
-  explicit IndexReader(CodeIndex *indexer) : indexer_{indexer} {}
-  // Open: open the underlying file, and ready to read.
-  void Open();
+  explicit IndexReader(const std::string &indexFile) : indexFile_{indexFile} {}
 
-  char Slice(int offset, int size);
-  uint32_t Uint32(int offset);
+  void open();
+  char *slice(int offset, int size);
+  uint32_t uint32(int offset);
 
 private:
   bool verbose_;
@@ -27,7 +27,7 @@ private:
   size_t num_name_;
   size_t num_post_;
 
-  CodeIndex *indexer_;
+  std::string indexFile_;
   int fd_;
 };
 } // namespace tools::idx

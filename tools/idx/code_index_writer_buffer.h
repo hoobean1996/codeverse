@@ -1,7 +1,8 @@
 #pragma once
 
-#include <fstream>
+#include <cstdint>
 #include <filesystem>
+#include <fstream>
 #include <string>
 
 namespace tools::idx {
@@ -19,6 +20,7 @@ public:
   void writeString(const std::string &);
   uint32_t offset();
   void writeTrigram(uint32_t t);
+  void writeUint32(uint32_t x);
 
 private:
   int left();

@@ -1,7 +1,8 @@
 #include "tools/idx/code_index_writer_buffer.h"
-#include <stdint.h>
+#include <cstdint>
 #include <fstream>
 #include <glog/logging.h>
+#include <stdint.h>
 
 namespace tools::idx {
 IndexWriterBuffer::IndexWriterBuffer(const std::string &name) : name_{name} {
@@ -55,6 +56,7 @@ void IndexWriterBuffer::writeString(const std::string &message) {
     }
   }
   memcpy(buf_ + valid_, message.c_str(), message.size());
+  valid_ += message.size();
 }
 
 uint32_t IndexWriterBuffer::offset() {
@@ -76,6 +78,17 @@ void IndexWriterBuffer::writeTrigram(uint32_t t) {
                  static_cast<char>(t)};
   memcpy(buf_ + valid_, tmp, 3);
   valid_ += 3;
+}
+
+void IndexWriterBuffer::writeUint32(uint32_t x) {
+  int left = this->left();
+  if (left < 4) {
+    flush();
+  }
+  char tmp[4] = {static_cast<char>(x >> 24), static_cast<char>(x >> 16),
+                 static_cast<char>(x >> 8), static_cast<char>(x)};
+  memcpy(buf_ + valid_, tmp, 4);
+  valid_ += 4;
 }
 
 IndexWriterBuffer::~IndexWriterBuffer() { flush(); }

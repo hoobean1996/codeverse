@@ -15,6 +15,7 @@ TEST(CodeIndexWriter, WriterBufferWrite) {
   f.read(buf, expectBytes);
   auto actualBytes = f.gcount();
   EXPECT_TRUE(actualBytes == message.size()) << "actualBytes = " << actualBytes;
+  EXPECT_TRUE(indexWriterBuffer->offset() == expectBytes);
 }
 
 TEST(CodeIndexWriter, WriterBufferWriteString) {
@@ -30,6 +31,7 @@ TEST(CodeIndexWriter, WriterBufferWriteString) {
   f.read(buf, expectBytes);
   auto actualBytes = f.gcount();
   EXPECT_TRUE(actualBytes == message.size()) << "actualBytes = " << actualBytes;
+  EXPECT_TRUE(indexWriterBuffer->offset() == expectBytes);
 }
 
 TEST(CodeIndexWriter, WriterBufferWriteByte) {
@@ -44,6 +46,7 @@ TEST(CodeIndexWriter, WriterBufferWriteByte) {
   f.read(buf, 1);
   auto actualBytes = f.gcount();
   EXPECT_TRUE(actualBytes == 1) << "actualBytes = " << actualBytes;
+  EXPECT_TRUE(indexWriterBuffer->offset() == 1);
 }
 
 TEST(CodeIndexWriter, WriterBufferWriteTrigram) {
@@ -58,4 +61,5 @@ TEST(CodeIndexWriter, WriterBufferWriteTrigram) {
   f.read(buf, 3);
   auto actualBytes = f.gcount();
   EXPECT_TRUE(actualBytes == 3) << "actualBytes = " << actualBytes;
+  EXPECT_TRUE(indexWriterBuffer->offset() == 3);
 }

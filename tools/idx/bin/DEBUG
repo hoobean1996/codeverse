@@ -1,0 +1,2 @@
+gdb --args ./bazel-bin/tools/idx/bin/idx -path .
+valgrind ./bazel-bin/tools/idx/bin/idx -path .

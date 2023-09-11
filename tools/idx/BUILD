@@ -22,25 +22,3 @@ cc_library(
     ],
 )
 
-cc_binary(
-    name = "idx",
-    srcs = [
-        "main.cc",
-    ],
-    data = [
-        ":test_main",
-    ],
-    deps = [
-        ":idx_code_index",
-        "@com_github_gflags_gflags//:gflags",
-        "@com_github_google_glog//:glog",
-    ],
-)
-
-filegroup(
-    name = "test_main",
-    srcs = [
-        "main.cc",
-    ],
-    visibility = ["//visibility:public"],
-)
