@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <glog/logging.h>
 #include <string>
+#include <functional>
 
 namespace tools::idx {
 

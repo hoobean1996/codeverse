@@ -1,7 +1,6 @@
 #pragma once
 
-#include <_types/_uint32_t.h>
-#include <_types/_uint64_t.h>
+#include <stdint.h>
 
 namespace tools::idx {
 struct PostEntry {

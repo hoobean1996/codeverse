@@ -1,6 +1,6 @@
 #pragma once
 
-#include <_types/_uint32_t.h>
+#include <stdint.h>
 #include <vector>
 namespace tools::idx {
 class SparseSet {

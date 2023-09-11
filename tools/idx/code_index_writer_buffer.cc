@@ -1,5 +1,5 @@
 #include "tools/idx/code_index_writer_buffer.h"
-#include <_types/_uint8_t.h>
+#include <stdint.h>
 #include <fstream>
 #include <glog/logging.h>
 
@@ -17,10 +17,8 @@ IndexWriterBuffer::IndexWriterBuffer(const std::string &name) : name_{name} {
 }
 
 void IndexWriterBuffer::flush() {
-  LOG(INFO) << "flush begin";
   stream_.write(buf_, valid_);
   stream_.flush();
-  LOG(INFO) << "flush end";
   valid_ = 0;
 }
 
@@ -28,7 +26,6 @@ int IndexWriterBuffer::left() { return kBufSize - valid_; }
 
 void IndexWriterBuffer::write(const char *x, int size) {
   int left = this->left();
-  LOG(INFO) << "left = " << left << " size = " << size;
   if (size > left) {
     flush();
     // if size > cap, write to the underlying file directly
@@ -38,8 +35,6 @@ void IndexWriterBuffer::write(const char *x, int size) {
   }
   memcpy(buf_ + valid_, x, size);
   valid_ += size;
-  LOG(INFO) << "left buffer is enough, "
-            << "valid = " << valid_;
 }
 
 void IndexWriterBuffer::writeByte(uint8_t x) {
